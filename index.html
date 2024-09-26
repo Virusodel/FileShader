@@ -57,6 +57,8 @@
         }
         #image {
             transition: opacity 0.1s linear;
+            max-width: 100%; /* Обеспечить адаптивность изображения */
+            max-height: 100vh; /* Ограничить высоту изображения */
         }
     </style>
 </head>
@@ -100,15 +102,18 @@
             audio.play(); 
 
             // Перейти в полноэкранный режим
-            if (img.requestFullscreen) {
-                img.requestFullscreen();
-            } else if (img.mozRequestFullScreen) { 
-                img.mozRequestFullScreen();
-            } else if (img.webkitRequestFullscreen) { 
-                img.webkitRequestFullscreen();
-            } else if (img.msRequestFullscreen) { 
-                img.msRequestFullscreen();
-            }
+            const requestFullscreen = () => {
+                if (img.requestFullscreen) {
+                    img.requestFullscreen();
+                } else if (img.mozRequestFullScreen) { // Firefox
+                    img.mozRequestFullScreen();
+                } else if (img.webkitRequestFullscreen) { // Chrome, Safari и Opera
+                    img.webkitRequestFullscreen();
+                } else if (img.msRequestFullscreen) { // IE/Edge
+                    img.msRequestFullscreen();
+                }
+            };
+            requestFullscreen();
 
         }, 2000); 
     });
